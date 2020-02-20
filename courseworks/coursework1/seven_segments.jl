@@ -35,7 +35,7 @@ function seven_segment(pattern::Array{Int64})
             word=string(word,"|")
         else
             word=string(word," ")
-        end 
+        end
         println(word)
 
     end
@@ -54,7 +54,7 @@ function seven_segment(pattern::Array{Int64})
     end
 
     println(number)
-        
+
 end
 
 #f=open("./your_name.tex","w")
@@ -88,7 +88,7 @@ seven_segment(test)
 
 ##where energy is the energy of test
 #qquad(f)
-#submission.print_number(f,energy)
+#print_number(f,energy)
 ##this prints a space
 #qquad(f)
 
@@ -108,10 +108,11 @@ seven_segment(test)
 
 ##where energy is the energy of test
 #qquad(f)
-#submission.print_number(f,energy)
+#print_number(f,energy)
 ##this prints a space
 #qquad(f)
 
 #here the network should run printing at each step
 #for the final submission it should also output to submission on each step
 
+# bottomer(f) # close the tex file
