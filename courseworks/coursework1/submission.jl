@@ -16,11 +16,11 @@ function bottomer(document::IOStream)
 end
 
 function seven_segment_display(document::IOStream,pattern::Vector{Int64})
-        
+
     write(document,"\\begin{tikzpicture}\n")
 
     segment_direction=Dict(7=>"(0,0)--(1,0)",6=>"(1.05,0.05)--(1.05,1.05)",5=>"(-.05,0.05)--(-.05,1.05)",4=>"(0,1.10)--(1,1.10)",3=>"(1.05,1.15)--(1.05,2.15)",2=>"(-.05,1.15)--(-.05,2.15)",1=>"(0,2.20)--(1,2.20)")
-    
+
     function write_draw(segment_status)
         if segment_status==1
             write(document,"\\draw[ultra thick,color=red]")
@@ -40,7 +40,7 @@ function seven_segment_display(document::IOStream,pattern::Vector{Int64})
 end
 
 
-        
+
 function  matrix_print(document,matrix_name,matrix,rounding=2)
     (n,r)=size(matrix)
     write(document,"\$\$ $matrix_name=\\left(\\begin{array}{")
@@ -50,7 +50,7 @@ function  matrix_print(document,matrix_name,matrix,rounding=2)
     write(document,"}\n")
     for j in 1:n
         for i in 1:r
-            entry=string(round(matrix[j,i],rounding))
+            entry=string(round(matrix[j,i],digits=rounding))
             write(document,entry)
             if i!=r
                 write(document,"&")
@@ -73,7 +73,7 @@ function seven_segment(document::IOStream,pattern::Vector{Int64})
             false
         end
     end
-    
+
     for (i,b) in enumerate(map(to_bool,pattern[8:11]))
         if b
             number+=2^(i-1)
@@ -90,11 +90,10 @@ function cr(document::IOStream)
 end
 
 function print_number(document::IOStream,number::Float64,rounding=3)
-    rounded=round(number,rounding)
+    rounded=round(number,digits=rounding)
     write(document," $rounded ")
 end
-        
+
 function qquad(document)
     write(document,"\\qquad\n ")
 end
-
