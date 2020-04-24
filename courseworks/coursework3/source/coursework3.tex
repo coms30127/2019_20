@@ -40,11 +40,12 @@ Submit your report on Blackboard. The deadline is 1pm on Monday 18th May 2020.
 
 Simulate an integrate and fire model with the following parameters for
 1 s: $\tau_m = 10 $ms, $E_L = V_{rest} = -70$ mV, $V_{th} = -40$ mV, $R_m= 10$
-M$\Omega$, $I_e = 3.1 $ nA. Use Euler's method with timestep $\delta t
-= 0.25$ ms. Here $E_L$ is the leak potential, $V_{rest}$ is the reset voltage,
+M$\Omega$, $I_e = 3.1 $ nA. Here $E_L$ is the leak potential, $V_{rest}$ is the reset voltage,
 $V_{th}$ is the threshold, $R_m$ is the membrane resistance, that is one
-over the conductance, and $\tau_m$ is the membrane time constant. \emph{Plot
-the voltage as a function of time}. For simplicity assume that the
+over the conductance, and $\tau_m$ is the membrane time constant. Use Euler's method with timestep $\delta t
+= 0.25$ ms to solve the differential equations numerically.
+
+\emph{Plot the voltage as a function of time}. For simplicity assume that the
 neuron does not have a refractory period after producing a spike. You
 do not need to plot spikes -- once membrane potential exceeds
 threshold, simply set the membrane potential to $V_{rest}$. To keep track of the units I recommend converting everything to S.I. units inside your simulation code -- you don't have to do this but it often makes things easier.
@@ -56,7 +57,7 @@ Simulate two neurons which have synaptic connections between
   second neuron projects to the first. Both model neurons should have
   the same parameters: $\tau_m = 20$ ms, $E_L = -70$ mV, $V_{rest} = -80$ mV,
   $V_{th} = -54$ mV, $R_mI_e = 18$ mV, and their synapses should also have
-  the same parameters: $R_m \bar{g}_s = 0.15$, $P = 0.5$, $\tau_s= 10$
+  the same parameters: $R_m \bar{g}_s = 0.15$, $\Delta s = 0.5$, $\tau_s= 10$
   ms; don't get confused by being given $R_m\bar{g}_s$ rather than
   $\bar{g}_s$ on its own, to get $\tau_m$ rather than the capacitance
   on the left hand side of the integrate and fire equation everything
@@ -68,8 +69,8 @@ to satisfy
 \begin{equation}
 \tau_s\frac{ds}{dt}=-s
 \end{equation}
-with a spike arriving causing $s$ to increase by $P$. This is
-equivalent to the simple synapse model in the lectures. Simulate two
+with a spike arriving causing $s$ to increase instantaneously by an amount $\Delta s$. This is
+equivalent to the simplest synapse model in lecture 16. Simulate two
 cases: a) assuming that the synapses are excitatory with $E_s = 0$ mV,
 and b) assuming that the synapses are inhibitory with $E_s = -80$
 mV. For each simulation set the initial membrane potentials of the
@@ -99,16 +100,15 @@ This question uses parameters from Q1 above.
 \end{enumerate}
 
 \section*{Part B: STDP (75\% of coursework grade)}
-Now make a new simulation of a single leaky-integrate-and-fire neuron (you can reuse appropriate bits of your code from Part A). Set the resting potential $V_{rest}=-65$ mV,
+Now make a new simulation of a single leaky-integrate-and-fire neuron (you can reuse appropriate bits of your code from Part A). Set the resting potential $V_{rest}= E_L = -65$ mV,
 spike threshold $V_{th}=-50$ mV, reset voltage $V_{reset}=V_{rest}=-65$
 mV, a passive membrane leak conductance that gives an input resistance
 of $R_{m}=100$ M$\Omega$, and $\tau_{m}=10$
-ms. Note that these values are different to those used above in Part A. Don't include a background input current, $I_e=0$. Add $N=40$ incoming
-synapses (just model the synaptic responses to spike trains, do not
+ms. Note that these values are different to those used above in Part A. Don't include a background input current, $I_e=0$. Add $N=40$ incoming synapses (just model the synaptic responses to spike trains, do not
 explicitly simulate the somatic voltages of these presynaptic neurons).
 Model all synapses as a conductance-based, following a single-exponential
 timecourse with decay time constant $\tau_{s}=2$ ms, the initial
-peak conductances (strengths) all $\bar{g} = 4$ nanoSiemens, and $P=0.5$. Use the Euler method to solve the system of ODEs, with a simulation timestep $\delta t=0.25$ milliseconds.
+peak conductances (strengths) all $\bar{g}_i = 4$ nanoSiemens for all synapses, $E_s=0$, and $\Delta s=0.5$. Let $s_i (t=0)=0$ for all 40 synapses. You should have 40 different $s_i$ variables and 40 different $\bar{g}_i$ variables in total, since you have 40 synapses. It's probably easier to store them all in arrays and update them together, rather than code each one by hand. Use the Euler method to solve the system of ODEs (40 $s$ variables plus 1 voltage variable), with a simulation timestep $\delta t=0.25$ milliseconds.
 
 Simulate each input spike train as an independent homogeneous Poisson
 process with the same average firing rate $\langle r\rangle$. A homogeneous
@@ -122,7 +122,7 @@ assume a spike has occurred at that synapse. This method is valid as
 long as $\langle r\rangle\delta t\ll1$.
 
 \subsection*{Question 1 [15 marks]}
-Initially set all the synapses at the same strength, equal to the maximal conductance (2 nS). Simulating your model at this stage should result in the neuron firing irregularly at a rate of roughly 20 Hz. \emph{Plot the neuron's voltage for one second of simulation time.}
+Initially set all the synapses at the same strength, equal to the maximal conductance (4 nS). Simulating your model at this stage should result in the neuron firing irregularly at a rate of roughly 20 Hz. \emph{Plot the neuron's voltage for one second of simulation time.}
 
 
 \subsection*{Question 2 [20 marks]}
@@ -148,7 +148,9 @@ only include the most recent pre and post spikes in your weight update
 calculations. Finally, impose hard limits on the synaptic strengths
 during the entire simulations: if an update would make a synaptic
 weight negative, set it to zero; if an update would make the synaptic
-weight greater than 2 nS, cap it at exactly 2 nS instead.
+weight greater than 4 nS, cap it at exactly 4 nS instead.
+
+One convenient trick that simplifies programming is to note that potentiation happens at all synapses whenever a post-synaptic spike occurs, whereas depression happens at the synapses that receive a pre-synaptic spike.
 
 Include a flag in your code that lets you switch the simulation mode
 from having STDP `on' or `off'. STDP `on' mode means that every
@@ -162,7 +164,7 @@ at the same values throughout the simulation.
 % simulation. Hence any values you include in your report should come
 % from averages over multiple realisations (repeats) of the simulations.
 
-Now set the STDP flag to `on', initialise all the synaptic strengths to 2 nS and set the input firing rates $\langle r\rangle=15$
+Now set the STDP flag to `on', initialise all the synaptic strengths to 4 nS and set the input firing rates $\langle r\rangle=15$
 Hz. Run the simulation for 300 s of biological time. \textcolor{magenta}{What qualitative shape does the synaptic strength distribution converge towards at the end of the simulation time?} (You might need to run the simulation a few times to see the pattern).
 \emph{Plot a histogram of the steady-state synaptic weights after
 one run of the simulation. Also plot the average firing rate of the
