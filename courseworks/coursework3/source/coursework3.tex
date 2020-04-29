@@ -17,9 +17,8 @@
 \section*{Coursework 3}
 This coursework has two parts: part A on the integrate-and-fire neuron model (worth 25\% of the coursework grade) and part B on spike-timing-dependent-plasticity (worth 75\% of the coursework grade). COMS30127 marks add up nicely to 100, but for COMSM2127 the marks add up to 135 -- don't worry we will normalise these (within each part) after marking.
 
-Write a brief report, no longer than five pages,\footnote{COMSM2127 can extend to six pages if they want, but five should be enough} probably shorter,
-including the figures and the comments specified. We will take a dim view of
-super-narrow margins or tiny fonts. Submit it in the pdf format
+Write a brief report, around five or six or seven pages,
+including the figures and the comments specified. No need to be verbose, just say what you are asked to say. We will take a dim view of super-narrow margins or tiny fonts. Submit it in the pdf format
 together with the Python or Julia or MATLAB code by the deadline. Submit the report as pdf; make
 sure to set the size of the graphs in your plotting program, not by
 shrinking the graph to fit in the report, this makes the figure
@@ -43,7 +42,7 @@ Simulate an integrate and fire model with the following parameters for
 M$\Omega$, $I_e = 3.1 $ nA. Here $E_L$ is the leak potential, $V_{rest}$ is the reset voltage,
 $V_{th}$ is the threshold, $R_m$ is the membrane resistance, that is one
 over the conductance, and $\tau_m$ is the membrane time constant. Use Euler's method with timestep $\delta t
-= 0.25$ ms to solve the differential equations numerically.
+= 0.25$ ms to solve the differential equations numerically. Make sure to use the differential equations, do not just plot the analytical solution for V(t) given in the lectures/notes -- this will be useless for later questions anyway.
 
 \emph{Plot the voltage as a function of time}. For simplicity assume that the
 neuron does not have a refractory period after producing a spike. You
@@ -93,8 +92,8 @@ This question uses parameters from Q1 above.
   above, and \emph{plot the voltage as a functions of time}.
 
 \item Simulate the neuron for 1s for currents ranging from 2 [nA] to 5
-  [nA] in steps of 0.1 [nA]. For each amplitude of current \textcolor{magenta}{count the
-  number of spikes produced}, that is the firing rate. \emph{Plot the firing
+  [nA] in steps of 0.1 [nA]. For each amplitude of current count the
+  number of spikes produced, that is the firing rate. \emph{Plot the firing
   rate as the function of the input current.} 
 
 \end{enumerate}
