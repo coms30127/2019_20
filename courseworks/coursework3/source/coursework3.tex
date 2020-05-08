@@ -140,6 +140,10 @@ f(\Delta t)=
 %-A_{-}\exp(-|\Delta t|/\tau_{-}) & {\rm if}\quad\Delta t\leq0
 \]
 
+\begin{figure}[h!]
+\includegraphics[width=0.8\textwidth]{stdp.png}
+\end{figure}
+
 Initially set the four STDP model parameters as: $A_{+}=0.2$ nS ,
 $A_{-}=0.25$ nS, $\tau_{+}=20$ ms, $\tau_{-}=20$ ms. The synaptic
 strength updates should follow the `nearest neighbour' principle:
@@ -207,17 +211,11 @@ strengths as a function of $B$. Plot example histograms of the steady-state
 synaptic strengths for $B=0$ and $B=20$ Hz}. \textcolor{magenta}{Give an explanation for what you think is
 happening.}
 
-\subsection*{COMSM2127 [20 marks]} Measure the temporal cross correlations functions
-$\rho_{i}(\Delta t)$ between a few example presynaptic neurons and
-the postsynaptic neuron in the last 30 seconds of the simulation (where the subscript $i$ indexes the presynaptic
-neuron). \textcolor{magenta}{State what it looks like in words.} \emph{Plot the
-cross-correlation function (cross-correlogram) both for the STDP `off'
-and `on' cases.} \textcolor{magenta} {For both the STDP `on' and `off' cases report $C$}, the time integral of
-the product of the crosscorrelation $\rho_i(\Delta t)$ with the plasticity function $f(\Delta t)$ between $\Delta t=-50$ ms and $\Delta t=+50$:
+\subsection*{COMSM2127 [20 marks]} Now set $B=0$ and $r_0 = 15$ Hz again, and simulate for 300 s. Measure the temporal cross-correlogram $\rho_{i}(\Delta t)$ between all presynaptic neurons and the postsynaptic neuron (where the subscript $i$ indexes the presynaptic
+neuron), and take the average:
 \[
-C = \int_{-50 ms}^{+50 ms} (\rho \times f) \Delta t.
-\] \textcolor{magenta} {Give your explanation for what is
-happening.}
+\bar{\rho}(\Delta t)=\frac{1}{N}\sum_i \rho_{i}(\Delta t)
+\], separately for the spikes from the first 20 seconds of the simulation and again for the spikes from the last 100 seconds of the simulation. Both these cross-correlograms should cover the interval -50 to +50 ms in steps of 1 ms. \emph{Plot the cross-correlogram for both cases (start and end of the simulation) on the same plot.} \textcolor{magenta}{State what the curves look like, and what is different between the two curves, noting in particular what happens near $\Delta t  =0$.} How does this relate to the stabilisation of firing rates and synaptic strengths that occurs during the simulation? \textcolor{magenta} {Give your explanation for what is happening, referring back to the STDP curve $f(\Delta t)$.} [hint: note that $A_- > A_+$]
 
 % \subsection*{COMSM2127} Now split the 40 input synapses into two equal sized
 % groups ($N_{1}=20$, $N_{2}=20$). Make the first input group's spike
